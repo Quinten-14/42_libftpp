@@ -46,16 +46,62 @@ Copy the main.cpp file to your project and include the library for testing or ru
 The Pool class is a data structure that is used to store a collection of objects. The pool is a fixed-size data structure that is used to store objects of the same type. The pool is a memory-efficient data structure that is used to store objects of the same type.
 
 ```cpp
-#include "pool.h"
+#include "pool.hpp"
+#include <iostream>
+#include <stdexcept>
+
+struct TestObject {
+    int value;
+
+    TestObject() : value(0) {
+        std::cout << "Default constructed TestObject with value: " << value << std::endl;
+    }
+
+    TestObject(int v) : value(v) {
+        std::cout << "Constructed TestObject with value: " << value << std::endl;
+    }
+
+    ~TestObject() {
+        std::cout << "Destroyed TestObject with value: " << value << std::endl;
+    }
+
+    void print() const {
+        std::cout << "TestObject value: " << value << std::endl;
+    }
+};
 
 int main() {
-  Pool<int> pool(10);
+    Pool<TestObject> pool;
 
-  pool.add(1);
-  pool.add(2);
-  pool.add(3);
+    pool.resize(3);
 
-  pool.remove(2);
+    try {
+        auto obj1 = pool.acquire(10);
+        obj1->print();
+    } catch (const std::runtime_error& e) {
+        std::cerr << "Exception: " << e.what() << std::endl;
+    }
+
+    try {
+        auto obj2 = pool.acquire(20);
+        obj2->print();
+    } catch (const std::runtime_error& e) {
+        std::cerr << "Exception: " << e.what() << std::endl;
+    }
+
+    try {
+        auto obj3 = pool.acquire(30);
+        obj3->print();
+    } catch (const std::runtime_error& e) {
+        std::cerr << "Exception: " << e.what() << std::endl;
+    }
+
+    try {
+        auto obj4 = pool.acquire(40);
+        obj4->print();
+    } catch (const std::runtime_error& e) {
+        std::cerr << "Exception: " << e.what() << std::endl;
+    }
 
     return 0;
 }
