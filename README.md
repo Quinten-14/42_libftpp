@@ -11,6 +11,7 @@ A C++ toolkit for some advanced topics like data pools, threading, networking, e
     - [Pool](#pool)
     - [DataBuffer](#databuffer)
   - [Design Patterns](#design-patterns)
+    - [Observer](#observer)
   - [IOStrean](#iostream)
   - [Threading](#threading)
   - [Networking](#networking)
