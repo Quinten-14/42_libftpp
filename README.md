@@ -160,6 +160,59 @@ int main() {
 
 ### Design Patterns
 
+#### Observer
+
+The Observer Pattern is a behavioral design pattern that defines a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically normally.
+
+```cpp
+#include "observer.hpp"
+#include <iostream>
+
+enum class EventType { Start, Stop, Pause, Resume };
+
+int main() {
+    Observer<EventType> observer;
+
+    observer.subscribe(EventType::Start, []() {
+        std::cout << "[Listener 1] Start event triggered!" << std::endl;
+    });
+
+    observer.subscribe(EventType::Start, []() {
+        std::cout << "[Listener 2] Starting some initialization process..." << std::endl;
+    });
+
+    observer.subscribe(EventType::Stop, []() {
+        std::cout << "[Listener 1] Stop event triggered! Shutting down." << std::endl;
+    });
+
+    observer.subscribe(EventType::Pause, []() {
+        std::cout << "[Listener 1] Pause event: Pausing the system." << std::endl;
+    });
+
+    observer.subscribe(EventType::Pause, []() {
+        std::cout << "[Listener 2] Pause event: Saving current state..." << std::endl;
+    });
+
+    observer.subscribe(EventType::Resume, []() {
+        std::cout << "[Listener 1] Resume event: System resuming from pause." << std::endl;
+    });
+
+    std::cout << "Triggering Start event..." << std::endl;
+    observer.notify(EventType::Start);
+
+    std::cout << "\nTriggering Pause event..." << std::endl;
+    observer.notify(EventType::Pause);
+
+    std::cout << "\nTriggering Resume event..." << std::endl;
+    observer.notify(EventType::Resume);
+
+    std::cout << "\nTriggering Stop event..." << std::endl;
+    observer.notify(EventType::Stop);
+
+    return 0;
+}
+```
+
 ### IOStream
 
 ### Threading
