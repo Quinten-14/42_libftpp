@@ -13,6 +13,7 @@ A C++ toolkit for some advanced topics like data pools, threading, networking, e
   - [Design Patterns](#design-patterns)
     - [Memento](#memento)
     - [Observer](#observer)
+    - [Singleton](#singleton)
   - [IOStrean](#iostream)
   - [Threading](#threading)
   - [Networking](#networking)
@@ -239,6 +240,47 @@ int main() {
 
     std::cout << "\nTriggering Stop event..." << std::endl;
     observer.notify(EventType::Stop);
+
+    return 0;
+}
+```
+
+#### Singleton
+
+The Singleton Pattern is a creational design pattern that ensures a class has only one instance and provides a global point of access to it.
+
+```cpp
+#include "singleton.hpp"
+#include <iostream>
+
+class MyClass
+{
+public:
+    MyClass(int x, int y) : a(x), b(y) {
+        std::cout << "MyClass created with a: " << a << ", b: " << b << std::endl;
+    }
+
+    void print() const {
+        std::cout << "a: " << a << ", b: " << b << std::endl;
+    }
+
+private:
+    int a, b;
+};
+
+int main()
+{
+    try {
+        Singleton<MyClass>::instanciate(10, 20);
+
+        MyClass* instance = Singleton<MyClass>::instance();
+        instance->print();
+
+        Singleton<MyClass>::instanciate(30, 40);
+    }
+    catch (const std::exception& e) {
+        std::cerr << e.what() << std::endl;
+    }
 
     return 0;
 }
