@@ -11,6 +11,7 @@ A C++ toolkit for some advanced topics like data pools, threading, networking, e
     - [Pool](#pool)
     - [DataBuffer](#databuffer)
   - [Design Patterns](#design-patterns)
+    - [Memento](#memento)
     - [Observer](#observer)
   - [IOStrean](#iostream)
   - [Threading](#threading)
@@ -160,6 +161,35 @@ int main() {
 ```
 
 ### Design Patterns
+
+#### Memento
+
+The Memento Pattern is a behavioral design pattern that allows an object to capture its internal state and save it to an external object so that the object can be restored to this state later.
+
+```cpp
+#include "memento.hpp"
+
+int     main()
+{
+    Saveable    obj ("Quinten", "Raymaekers");
+    obj.printState();
+
+    Memento::Snapshot snapshot = obj.save();
+
+    Saveable    obj2("Steve", "Raymaekers");
+    obj2.printState();
+
+    Memento::Snapshot obj2_old = obj2.save();
+
+    obj2.load(snapshot);
+    obj2.printState();
+
+    obj2.load(obj2_old);
+    obj2.printState();
+
+    return 0;
+}
+```
 
 #### Observer
 
